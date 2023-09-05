@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update department</title>
+    <style>
+        h1{
+            text-align: center;
+        }
+        .form-login{
+            
+            height: 100vh;
+            justify-content: center;
+            justify-items: center;
+            margin: 0 20%;
+        }
+        input{
+            width: 150px;
+            height: 48px;
+        }
+        button[type=submit] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            font-size: 18px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+        input[type=text], input[type=password],input[type=number] {
+            width: 100%;
+            padding: 12px 14px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>Update user form</h1>
+    <div class="form-login">
+        <form th:action="@{/department/update}" method="post">
+            <div>
+<!--                <label>ID:</label>-->
+                <input type="hidden" name="id" placeholder="id" th:value="${department.id}">
+            </div>
+            <div>
+                <label th:text="#{department.name}"></label>
+                <input type="text" name="name" placeholder="name" th:value="${department.name}">
+            </div>
+            <div>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

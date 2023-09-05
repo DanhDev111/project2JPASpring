@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="/template.html" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh Sách Phòng ban</title>
+    
+    <link href="http://w3schools.com/favicon.png" rel="icon">
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        input[type=text] {
+            width: 40%;
+            padding: 12px 14px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        button[type=submit] {
+            width: 70px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 9px;
+            margin: 8px 0;
+            font-size: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!--    // LƯU Ý : khi submit 1 form hay request sẽ trả về 1 trang mới nên phải dùng model addAtribute để đẩy qua
+                       gán vào trong view trước khi resp về
+    -->
+    <!--    Giong cai include trong jsp php-->
+    <!--    <div th:replace="/fragment.html :: menu"></div>-->
+    <div layout:fragment="content">
+        <h2>List Department</h2>
+        <form method="get" th:action="@{/department/search}" th:object="${searchDTO}">
+            <input placeholder="Tim ten" th:field="*{keyword}" type="text">
+            <p th:errors="*{keyword}"></p>
+            <p th:errors="*{size}"></p>
+            <input placeholder="Trang hien tai" th:field="*{currentPage}" type="text">
+            <input placeholder="So luong ban ghi/ trang" th:field="*{size}" th:value="${searchDTO?.size}" type="text">
+            <input name="sortedField" placeholder="Sort thuoc tinh  " th:value="${searchDTO?.sortedField}" type="text">
+            <button style="margin-left: 10px" type="submit">Search</button>
+        </form>
+        <div>
+            <a th:href="@{'/department/search?currentPage=0&size=5'}">1</a>
+            <a th:href="@{'/department/search?currentPage=1&size=5'}">2</a>
+        </div>
+        <p>
+            Tổng số trang:
+            <span th:text="${totalPages}"></span>
+        </p>
+        <p>
+            Tổng số bản ghi:
+            <span th:text="${totalElements}"></span>
+        </p>
+        <div class="row">
+            <div class="col-9">
+                
+                <table class="table table-bordered">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th style="color: #f10606">Created At</th>
+                        <th colspan="2">Operation</th>
+                    </tr>
+                    <tbody>
+                        <!--            Chi can goi key thoi -->
+                        <tr th:each="d: ${departmentList}">
+                            <td th:text="${d.id}"></td>
+                            <td th:text="${d.name}"></td>
+                            <td th:text="${#dates.format(d.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+                            <td>
+                                <a th:href="@{'/department/update?id=' + ${d.id} }">Update</a>
+                            </td>
+                            <td>
+                                <a onclick="return confirm('Ban muon xoa???')"
+                                   th:href="@{'/department/delete?id=' + ${d.id} }">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-3">
+                <a th:href="@{/department/new}">+Add</a>
+            </div>
+        </div>
+        
+    </div>
+    
+    <!--    <div th:replace="/fragment.html :: footer"></div>-->
+
+</body>
+</html>

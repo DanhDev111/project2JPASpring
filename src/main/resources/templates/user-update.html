@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update user</title>
+    <style>
+        h1{
+            text-align: center;
+        }
+        .form-login{
+            
+            height: 100vh;
+            justify-content: center;
+            justify-items: center;
+            margin: 0 20%;
+        }
+        input{
+            width: 150px;
+            height: 48px;
+        }
+        button[type=submit] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            font-size: 18px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+        input[type=text], input[type=password],input[type=number] {
+            width: 100%;
+            padding: 12px 14px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>Update user form</h1>
+    <div class="form-login">
+        <form th:action="@{/user/update}" method="post">
+            <div>
+<!--                <label>ID:</label>-->
+                <input type="hidden" name="id" placeholder="id" th:value="${user.id}">
+            </div>
+            <div>
+                <label>Name:</label>
+                <input type="text" name="name" placeholder="name" th:value="${user.name}">
+            </div>
+            <div>
+                <label>Age:</label>
+                <input type="number" name="age" placeholder="Age" th:value="${user.age}">
+            </div>
+            <div>
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Username" th:value="${user.username}">
+            </div>
+    
+            <div>
+                <label>Department:</label>
+                <!--? --->
+                <select name="department.id">
+                    <option th:selected="${d.id == user.department?.id}"
+                            th:each="d: ${departmentList}"
+                            th:value="${d.id}" th:text="${d.name}"> />
+                </select>
+            </div>
+    
+            <div>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
